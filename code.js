@@ -26,10 +26,19 @@ function controller(e){
     if (e.target.value === "=" && numbers.operand !== ""){
         switch(numbers.operator){
             case "+":
-                alert("adding");
+                display.textContent = Number(numbers.operand) + Number(display.textContent);
+                break;
+            case "-":
+                display.textContent = Number(numbers.operand) - Number(display.textContent);
+                break;
+            case "*":
+                display.textContent = Number(numbers.operand) * Number(display.textContent);
+                break;
+            case "/":
+                display.textContent = Number(numbers.operand) / Number(display.textContent);
                 break;
         }
-    } else if (e.target.value=== "+"){
+    } else if (e.target.value=== "+"||e.target.value==="-"||e.target.value==="*"||e.target.value==="/"){
         if (numbers.operand === ""){
                 numbers.operand= display.textContent;
                 numbers.operator = e.target.value;
