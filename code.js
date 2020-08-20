@@ -1,26 +1,7 @@
-class Calculator {
-    constructor() {
-    }
-    add(){
-
-    }
-    subtract(){
-
-    }
-    multiply(){
-
-    }
-    divide(){
-
-    }
-};
 let numbers = {operand:"",
                operator:"",
                result:0
 };
-function addEventListener(){
-
-}
 function controller(e){
     let setOperators = new Set(["+","-","*","/"]);
     let display = document.querySelector('textarea');
@@ -56,34 +37,6 @@ function controller(e){
     } else{
         display.textContent += e.target.value;
     }
-
-
-
-
-
-
-    /*if (e.target === "="){
-        display.textContent = Number(display.textContent) + Number(numbers.operand);
-        }else{
-        if (e.target.value === "+") {
-            if (numbers.operand === ""){
-                numbers.operand= display.textContent;
-                numbers.operator = e.target.value;
-                display.textContent="";
-            }else{
-                numbers.operand= Number(numbers.operand)+Number(display.textContent);
-                numbers.operator=e.target.value;
-                display.textContent="";
-            }
-        }else{
-            display.textContent += e.target.value;
-        };
-    };*/
-
-
-
-
-
 }
 
 function init(){
