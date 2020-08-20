@@ -22,23 +22,28 @@ function addEventListener(){
 
 }
 function controller(e){
+    let setOperators = new Set(["+","-","*","/"]);
     let display = document.querySelector('textarea');
     if (e.target.value === "=" && numbers.operand !== ""){
         switch(numbers.operator){
             case "+":
                 display.textContent = Number(numbers.operand) + Number(display.textContent);
+                numbers.operand ="";
                 break;
             case "-":
                 display.textContent = Number(numbers.operand) - Number(display.textContent);
+                numbers.operand="";
                 break;
             case "*":
                 display.textContent = Number(numbers.operand) * Number(display.textContent);
+                numbers.operand="";
                 break;
             case "/":
                 display.textContent = Number(numbers.operand) / Number(display.textContent);
+                numbers.operand="";
                 break;
         }
-    } else if (e.target.value=== "+"||e.target.value==="-"||e.target.value==="*"||e.target.value==="/"){
+    } else if (setOperators.has(e.target.value)){
         if (numbers.operand === ""){
                 numbers.operand= display.textContent;
                 numbers.operator = e.target.value;
