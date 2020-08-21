@@ -1,93 +1,74 @@
-let numbers = {operand:"",
-               operator:"",
-};
-function controller(e){
-    let operators = new Set(["+","-","*","/"]);
-    let allowedChar = ["0","1","2","3","4","5","6","7","8","9","."];
-    let noPeriodsAllowed= ["0","1","2","3","4","5","6","7","8","9"];
-    let display = document.querySelector('textarea');
-    let input = e.target.value;
-    if (input === "=" && numbers.operand !== ""){
-        switch(numbers.operator){
-            case "+":
-                display.textContent = Number(numbers.operand) + Number(display.textContent);
-                numbers.operand ="";
-                numbers.operator="";
-                break;
-            case "-":
-                display.textContent = Number(numbers.operand) - Number(display.textContent);
-                numbers.operand="";
-                numbers.operator="";
-                break;
-            case "*":
-                console.log();
-                display.textContent = Number(numbers.operand) * Number(display.textContent);
-                numbers.operand="";
-                numbers.operator="";
-                break;
-            case "/":
-                display.textContent = Number(numbers.operand) / Number(display.textContent);
-                numbers.operand="";
-                numbers.operator="";
-                break;
-        }
-    } else if (operators.has(input)){
-        if (numbers.operand === ""){
-                numbers.operand= display.textContent;
-                numbers.operator = input;
-                display.textContent="";
-            }else{
-                switch(numbers.operator){
-                    case "+":
-                        numbers.operand= Number(numbers.operand)+Number(display.textContent);
-                        numbers.operator=input;
-                        display.textContent="";
-                        break;
-                    case "-":
-                        numbers.operand= Number(numbers.operand)-Number(display.textContent);
-                        numbers.operator=input;
-                        display.textContent="";
-                        break;
-                    case "*":
-                        numbers.operand= Number(numbers.operand)*Number(display.textContent);
-                        numbers.operator=input;
-                        display.textContent="";
-                        break;
-                    case "/":
-                        numbers.operand= Number(numbers.operand)/Number(display.textContent);
-                        numbers.operator=input;
-                        display.textContent="";
-                        break;
-                }
-                // numbers.operand= Number(numbers.operand)+Number(display.textContent);
-                // numbers.operator=input;
-                // display.textContent="";
-            }
-    } else {
-        if ((display.textContent.includes(".") && input===".")||(input==="=")){
+let memory = "";
+let operator="";
+let equalsToggle=false;
+let operatorToggle=false;
+let operatorArray=["+","-","*","/"];
+let calculate ={"+":(x,y)=>{return x + y},
+                "-":(x,y)=>{return x - y},
+                "*":(x,y)=>{return x * y},
+                "/":(x,y)=>{return x / y}
+}
 
-        }  else{
-            if (allowedChar.includes(input)){display.textContent += input;}
+function restrictDecimal(display,input) {
+    if (display.textContent.includes(".") && input==="."){
+        return false;
+    }
+    return true;
+}
+
+function stateRestrictions(display,input,inputType){
+    if (inputType ==="numeric" && equalsToggle === false){
+        if (restrictDecimal(display,input)){
+            display.textContent +=input;
+            return;
         }
+        return;
+    }
+    if (operatorArray.includes(input) && memory===""/*&&operatorToggle===false*/) {
+        memory = display.textContent;
+        operator = input;
+        display.textContent = "";
+        equalsToggle = false;
+        operatorToggle=true;
+        return;
+    }
+    if (operatorArray.includes(input) && memory !==""){
+        memory = calculate[input](Number(memory), Number(display.textContent));
+        operator = input;
+        display.textContent ="";
+        return;
+    }
+      if ((input === "*"||input==="+"||input==="/"||input==="-") && memory ===""&& equalsToggle===true){
+        memory = calculate[input](Number(memory), Number(display.textContent));
+        operator = input;
+        display.textContent ="";
+        equalsToggle=false;
+        return;
+    }
+    if (input === "="){
+        display.textContent= calculate[operator](Number(memory) , Number(display.textContent));
+        memory="";
+        operator="";
+        equalsToggle=true;
+        return;
     }
 }
-function countDecimals(){
 
+function controller(e) {
+    let display = document.querySelector('textarea');
+    let targetButton = e.target
+    let input = targetButton.innerText;
+    let inputType = targetButton.dataset.action;
+    stateRestrictions(display, input, inputType);
 }
-function clear(){
-    let textArea = document.querySelector('textarea');
-    textArea.textContent="";
-    numbers.operand="";
-    numbers.operator="";
-}
+
 function init(){
-    let div = document.querySelector('div');
+ let div = document.querySelector('div');
     div.addEventListener("click", event=>{
         controller(event);
     })
     let clearButton = document.getElementById('clear');
     clearButton.onclick=clear;
 }
-window.onload= init;
-
+window.onload=init;
 
