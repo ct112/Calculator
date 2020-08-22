@@ -33,25 +33,24 @@ function stateRestrictions(display,input,inputType){
         return;
     }
     if (operatorArray.includes(input) && memory !==""){
-        memory = calculate[input](Number(memory), Number(display.textContent));
+        //memory = calculate[operator](Number(memory), Number(display.textContent));
         operator = input;
         display.textContent ="";
         return;
     }
-      if ((input === "*"||input==="+"||input==="/"||input==="-") && memory ===""&& equalsToggle===true){
-        memory = calculate[input](Number(memory), Number(display.textContent));
+    if ((input === "*"||input==="+"||input==="/"||input==="-") && memory ==="")/*&& equalsToggle===true)*/{
+        memory = display.textContent;
         operator = input;
         display.textContent ="";
         equalsToggle=false;
         return;
     }
-    if (input === "="){
-        display.textContent= calculate[operator](Number(memory) , Number(display.textContent));
-        memory="";
-        operator="";
-        equalsToggle=true;
-        return;
-    }
+      if (input === "=") {
+          display.textContent = calculate[operator](Number(memory), Number(display.textContent));
+          memory = "";
+          operator = "";
+          equalsToggle = true;
+      }
 }
 
 function controller(e) {
@@ -69,6 +68,9 @@ function init(){
     })
     let clearButton = document.getElementById('clear');
     clearButton.onclick=clear;
+    let display = document.querySelector("textarea");
+    let equalsButton = document.getElementById("equals");
+
 }
 window.onload=init;
 
