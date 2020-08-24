@@ -40,7 +40,11 @@ function isExpressionReady(e){
             firstOperand.textContent ="";
         }
 }
-
+clearButton.addEventListener('click',()=> {
+    firstOperand.textContent = "";
+    secondOperand.textContent = "";
+    operator = "";
+})
 numericButtons.forEach(button =>{
     button.addEventListener("click",()=>{
          appendNumber(button.innerText);
@@ -54,15 +58,10 @@ operatorButtons.forEach(button =>{
     })
 })
 equalsButton.addEventListener("click", button =>{
-    let expressionArray=[secondOperand.textContent,operator,firstOperand.textContent];
+    let expressionArray = [secondOperand.textContent,operator,firstOperand.textContent];
     if (expressionArray.includes("")){return};
     firstOperand.textContent= calculate(Number(secondOperand.textContent),Number(firstOperand.textContent));
     operator = "";
     secondOperand.textContent= "";
     equalsToggle = true;
-})
-clearButton.addEventListener('click',()=> {
-    firstOperand.textContent = "";
-    secondOperand.textContent = "";
-    operator = "";
 })
