@@ -1,11 +1,20 @@
+*{
+    box-sizing: border-box;
+}
 .grid { display: grid;
         grid-template-columns: repeat(4, 1fr);
 }
 textarea{ display:flex;
-          margin-left: auto;
+          background: lightgrey;
+          align-items:flex-end;
+          flex-direction: column;
 
 }
-.clear{ display:flex;
-        flex:1;
-        flex-direction: column;
+.clear { width: 100%;
+         text-align: center;
+         margin: auto;
+
+}
+.hover{
+    background: red;
 }
