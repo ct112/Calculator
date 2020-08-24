@@ -27,6 +27,19 @@ function calculate(x,y){
     }
     return calcChoice[operator](x,y);
 }
+function operatorFilter(e){
+    if (firstOperand.textContent === ""){return};
+    if (secondOperand.textContent === "") {
+            secondOperand.textContent = firstOperand.textContent;
+            operator = e.target.textContent;
+            firstOperand.textContent = "";
+        }else{
+            secondOperand.textContent= calculate(Number(secondOperand.textContent),Number(firstOperand.textContent));
+            operator=e.target.textContent;
+            firstOperand.textContent ="";
+        }
+}
+
 numericButtons.forEach(button =>{
     button.addEventListener("click",()=>{
          appendNumber(button.innerText);
@@ -34,17 +47,8 @@ numericButtons.forEach(button =>{
     })
 })
 operatorButtons.forEach(button =>{
-    button.addEventListener("click",()=>{
-        if (secondOperand.textContent === "") {
-            secondOperand.textContent = firstOperand.textContent;
-            operator = button.innerText;
-            firstOperand.textContent = "";
-        }else{
-            secondOperand.textContent= calculate(Number(secondOperand.textContent),Number(firstOperand.textContent));
-            operator=button.innerText;
-            firstOperand.textContent ="";
-        }
-
+    button.addEventListener("click",(e)=>{
+        operatorFilter(e);
     })
 })
 equalsButton.addEventListener("click", button =>{
