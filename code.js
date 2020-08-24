@@ -4,10 +4,11 @@ const equalsButton = document.querySelector("[data-equals]");
 const clearButton = document.querySelector("[data-clear]");
 const firstOperand = document.getElementById("operand");
 const secondOperand = document.getElementById("storedOperand");
-let operator="";
+let operator = "";
+let equalsToggle = false;
 
 function appendNumber(key){
-    if (firstOperand.textContent.includes(".") && key ==="."){return}
+    if ((firstOperand.textContent.includes(".") && key ===".")||equalsToggle === true){return}
     firstOperand.textContent += key;
 }
 function calculate(x,y){
@@ -27,7 +28,7 @@ function calculate(x,y){
     }
     return calcChoice[operator](x,y);
 }
-function operatorFilter(e){
+function isExpressionReady(e){
     if (firstOperand.textContent === ""){return};
     if (secondOperand.textContent === "") {
             secondOperand.textContent = firstOperand.textContent;
@@ -48,7 +49,8 @@ numericButtons.forEach(button =>{
 })
 operatorButtons.forEach(button =>{
     button.addEventListener("click",(e)=>{
-        operatorFilter(e);
+        isExpressionReady(e);
+        equalsToggle =false;
     })
 })
 equalsButton.addEventListener("click", button =>{
@@ -57,6 +59,7 @@ equalsButton.addEventListener("click", button =>{
     firstOperand.textContent= calculate(Number(secondOperand.textContent),Number(firstOperand.textContent));
     operator = "";
     secondOperand.textContent= "";
+    equalsToggle = true;
 })
 clearButton.addEventListener('click',()=> {
     firstOperand.textContent = "";
