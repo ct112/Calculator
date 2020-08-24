@@ -5,26 +5,18 @@ const clearButton = document.querySelector("[data-clear]");
 const firstOperand = document.getElementById("operand");
 const secondOperand = document.getElementById("storedOperand");
 let operator = "";
-let equalsToggle = false;
+let lastOperatorIsEquals= false;
 
 function appendNumber(key){
-    if ((firstOperand.textContent.includes(".") && key ===".")||equalsToggle === true){return}
+    if ((firstOperand.textContent.includes(".") && key ===".")||lastOperatorIsEquals === true){return}
     firstOperand.textContent += key;
 }
 function calculate(x,y){
     const calcChoice = {
-        "+": (x, y) => {
-            return x + y
-        },
-        "-": (x, y) => {
-            return x - y
-        },
-        "*": (x, y) => {
-            return x * y
-        },
-        "/":(x,y) => {
-             return x/y
-        }
+        "+": (x, y) => {return x + y},
+        "-": (x, y) => {return x - y},
+        "*": (x, y) => {return x * y},
+        "/":(x, y) => {return x/y}
     }
     return calcChoice[operator](x,y);
 }
@@ -54,14 +46,14 @@ numericButtons.forEach(button =>{
 operatorButtons.forEach(button =>{
     button.addEventListener("click",(e)=>{
         isExpressionReady(e);
-        equalsToggle =false;
+        lastOperatorIsEquals= false;
     })
 })
 equalsButton.addEventListener("click", button =>{
     let expressionArray = [secondOperand.textContent,operator,firstOperand.textContent];
-    if (expressionArray.includes("")){return};
+    if (expressionArray.includes("")){return}
     firstOperand.textContent= calculate(Number(secondOperand.textContent),Number(firstOperand.textContent));
     operator = "";
     secondOperand.textContent= "";
-    equalsToggle = true;
+    lastOperatorIsEquals = true;
 })
