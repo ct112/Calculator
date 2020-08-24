@@ -1,76 +1,61 @@
-let memory = "";
+const numericButtons = document.querySelectorAll("[data-number]");
+const operatorButtons = document.querySelectorAll("[data-operators]");
+const equalsButton = document.querySelector("[data-equals]");
+const clearButton = document.querySelector("[data-clear]");
+const firstOperand = document.getElementById("operand");
+const secondOperand = document.getElementById("storedOperand");
 let operator="";
-let equalsToggle=false;
-let operatorToggle=false;
-let operatorArray=["+","-","*","/"];
-let calculate ={"+":(x,y)=>{return x + y},
-                "-":(x,y)=>{return x - y},
-                "*":(x,y)=>{return x * y},
-                "/":(x,y)=>{return x / y}
-}
 
-function restrictDecimal(display,input) {
-    if (display.textContent.includes(".") && input==="."){
-        return false;
-    }
-    return true;
+function appendNumber(key){
+    if (firstOperand.textContent.includes(".") && key ==="."){return}
+    firstOperand.textContent += key;
 }
-
-function stateRestrictions(display,input,inputType){
-    if (inputType ==="numeric" && equalsToggle === false){
-        if (restrictDecimal(display,input)){
-            display.textContent +=input;
-            return;
+function calculate(x,y){
+    const calcChoice = {
+        "+": (x, y) => {
+            return x + y
+        },
+        "-": (x, y) => {
+            return x - y
+        },
+        "*": (x, y) => {
+            return x * y
+        },
+        "/":(x,y) => {
+             return x/y
         }
-        return;
     }
-    if (operatorArray.includes(input) && memory===""/*&&operatorToggle===false*/) {
-        memory = display.textContent;
-        operator = input;
-        display.textContent = "";
-        equalsToggle = false;
-        operatorToggle=true;
-        return;
-    }
-    if (operatorArray.includes(input) && memory !==""){
-        //memory = calculate[operator](Number(memory), Number(display.textContent));
-        operator = input;
-        display.textContent ="";
-        return;
-    }
-    if ((input === "*"||input==="+"||input==="/"||input==="-") && memory ==="")/*&& equalsToggle===true)*/{
-        memory = display.textContent;
-        operator = input;
-        display.textContent ="";
-        equalsToggle=false;
-        return;
-    }
-      if (input === "=") {
-          display.textContent = calculate[operator](Number(memory), Number(display.textContent));
-          memory = "";
-          operator = "";
-          equalsToggle = true;
-      }
+    return calcChoice[operator](x,y);
 }
+numericButtons.forEach(button =>{
+    button.addEventListener("click",()=>{
+         appendNumber(button.innerText);
 
-function controller(e) {
-    let display = document.querySelector('textarea');
-    let targetButton = e.target
-    let input = targetButton.innerText;
-    let inputType = targetButton.dataset.action;
-    stateRestrictions(display, input, inputType);
-}
-
-function init(){
- let div = document.querySelector('div');
-    div.addEventListener("click", event=>{
-        controller(event);
     })
-    let clearButton = document.getElementById('clear');
-    clearButton.onclick=clear;
-    let display = document.querySelector("textarea");
-    let equalsButton = document.getElementById("equals");
+})
+operatorButtons.forEach(button =>{
+    button.addEventListener("click",()=>{
+        if (secondOperand.textContent === "") {
+            secondOperand.textContent = firstOperand.textContent;
+            operator = button.innerText;
+            firstOperand.textContent = "";
+        }else{
+            secondOperand.textContent= calculate(Number(secondOperand.textContent),Number(firstOperand.textContent));
+            operator=button.innerText;
+            firstOperand.textContent ="";
+        }
 
-}
-window.onload=init;
-
+    })
+})
+equalsButton.addEventListener("click", button =>{
+    let expressionArray=[secondOperand.textContent,operator,firstOperand.textContent];
+    if (expressionArray.includes("")){return};
+    firstOperand.textContent= calculate(Number(secondOperand.textContent),Number(firstOperand.textContent));
+    operator = "";
+    secondOperand.textContent= "";
+})
+clearButton.addEventListener('click',()=> {
+    firstOperand.textContent = "";
+    secondOperand.textContent = "";
+    operator = "";
+})
