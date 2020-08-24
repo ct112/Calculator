@@ -7,10 +7,10 @@
     </head>
     <body>
         <div>
-            <textarea id="storedOperand"></textarea>
-            <textarea id="operand"></textarea>
+            <textarea id="storedOperand" readonly></textarea>
+            <textarea id="operand" readonly></textarea>
         </div>
-        <div class="grid">
+        <div class="grid" class="hover">
             <button data-number>7</button>
             <button data-number>8</button>
             <button data-number>9</button>
@@ -28,7 +28,7 @@
             <button data-equals>=</button>
             <button data-operators>/</button>
         </div>
-                <button data-clear>Clear</button>
+                <button class="clear" class="hover" data-clear>Clear</button>
         <script src="code1.js">
         </script>
     </body>
