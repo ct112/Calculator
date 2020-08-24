@@ -4,10 +4,11 @@
 .grid { display: grid;
         grid-template-columns: repeat(4, 1fr);
 }
-textarea{ display:flex;
+#display{ display:flex;
           background: lightgrey;
           align-items:flex-end;
           flex-direction: column;
+          flex : 1;
 
 }
 .clear { width: 100%;
