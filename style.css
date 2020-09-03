@@ -2,20 +2,19 @@
         grid-template-columns: repeat(4, 1fr);
 }
 
-#display{ display:flex;
+#display { display:flex;
           background: black;
           align-items:flex-end;
           flex-direction: column;
           flex : 1;
-
 }
 
-#storedOperand{ background:lightblue;
+#storedOperand { background:lightblue;
                 opacity: .75;
                 text-align: right;
 }
 
-#operand{ background: lightblue;
+#operand { background: lightblue;
           text-align: right;
 }
 
