@@ -1,7 +1,7 @@
 .grid { display: grid;
         grid-template-columns: repeat(4, 1fr);
-
 }
+
 #display{ display:flex;
           background: black;
           align-items:flex-end;
@@ -9,13 +9,14 @@
           flex : 1;
 
 }
+
 #storedOperand{ background:lightblue;
                 opacity: .75;
                 text-align: right;
 }
+
 #operand{ background: lightblue;
           text-align: right;
-
 }
 
 .clear { width: 100%;
@@ -24,5 +25,4 @@
          background: yellow;
          opacity: .5;
 }
-.hover{
-}
+
